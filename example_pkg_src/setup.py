@@ -16,7 +16,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='example_pkg_a',
+    name='example_pkg',
 
     version='1',
 
@@ -27,8 +27,6 @@ setup(
     author_email='jonwayne@google.com',
 
     license='Apache Software License',
-
     packages=["example_pkg"],
-    namespace_packages=['example_pkg'],
     zip_safe=False,
 )

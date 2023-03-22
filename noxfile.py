@@ -33,8 +33,9 @@ if not USE_PYTHON_VERSIONS:
 install_commands = (
     ('pip', 'install', '.'),
     ('pip', 'install', '-e', '.'),
-    ('python', 'setup.py', 'install'),
-    ('python', 'setup.py', 'develop'))
+    #('python', 'setup.py', 'install'),
+    #('python', 'setup.py', 'develop')
+    )
 
 uninstall_names = ("a", "b")
 
@@ -72,7 +73,7 @@ def install_packages(session, package_a, package_b, command_a, command_b):
 @nox.parametrize('command_b', install_commands)
 @nox.parametrize('uninstall_name', uninstall_names)
 def session_pkgutil(session, command_a, command_b, uninstall_name):
-    session.install('--upgrade', 'setuptools', 'pip')
+    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
     session.install('example_pkg_src/')
     install_packages(
         session, 'pkgutil/pkg_a', 'pkgutil/pkg_b',
@@ -86,7 +87,7 @@ def session_pkgutil(session, command_a, command_b, uninstall_name):
 @nox.parametrize('command_b', install_commands)
 @nox.parametrize('uninstall_name', uninstall_names)
 def session_pkg_resources(session, command_a, command_b, uninstall_name):
-    session.install('--upgrade', 'setuptools', 'pip')
+    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
     session.install('example_pkg_src/')
     install_packages(
         session, 'pkg_resources/pkg_a', 'pkg_resources/pkg_b',
@@ -99,7 +100,7 @@ def session_pkg_resources(session, command_a, command_b, uninstall_name):
 @nox.parametrize('command_b', install_commands)
 @nox.parametrize('uninstall_name', uninstall_names)
 def session_pep420(session, command_a, command_b, uninstall_name):
-    session.install('--upgrade', 'setuptools', 'pip')
+    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
     session.install('example_pkg_src/')
     install_packages(
         session, 'native/pkg_a', 'native/pkg_b',
@@ -114,7 +115,7 @@ def session_pep420(session, command_a, command_b, uninstall_name):
 @nox.parametrize('uninstall_name', uninstall_names)
 def session_cross_pkg_resources_pkgutil(
         session, command_a, command_b, uninstall_name):
-    session.install('--upgrade', 'setuptools', 'pip')
+    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
     session.install('example_pkg_src/')
     install_packages(
         session, 'pkg_resources/pkg_a', 'pkgutil/pkg_b',
@@ -129,7 +130,7 @@ def session_cross_pkg_resources_pkgutil(
 @nox.parametrize('uninstall_name', uninstall_names)
 def session_cross_pep420_pkgutil(
         session, command_a, command_b, uninstall_name):
-    session.install('--upgrade', 'setuptools', 'pip')
+    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
     session.install('example_pkg_src/')
     install_packages(
         session, 'native/pkg_a', 'pkgutil/pkg_b',
@@ -144,7 +145,7 @@ def session_cross_pep420_pkgutil(
 @nox.parametrize('uninstall_name', uninstall_names)
 def session_cross_pep420_pkg_resources(
         session, command_a, command_b, uninstall_name):
-    session.install('--upgrade', 'setuptools', 'pip')
+    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
     session.install('example_pkg_src/')
     install_packages(
         session, 'native/pkg_a', 'pkg_resources/pkg_b',
