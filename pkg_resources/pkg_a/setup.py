@@ -31,4 +31,5 @@ setup(
     packages=find_packages(),
     namespace_packages=['example_pkg'],
     zip_safe=False,
+    install_requires=["example_pkg"],
 )
