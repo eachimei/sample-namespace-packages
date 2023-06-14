@@ -39,6 +39,8 @@ install_commands = (
 
 uninstall_names = ("a", "b")
 
+shared_package_path = "example_pkg_src/dist/example_pkg-1-py3-none-any.whl"
+
 
 def uninstall_test_flow(session, name):
     pkg_name = f'example_pkg.{name}'
@@ -67,33 +69,33 @@ def install_packages(session, package_a, package_b, command_a, command_b):
     session.run(*command_b)
     session.chdir(HERE)
 
+# this wont be supportable by the SVOS flow due to this having an overlapping __init__.py
+# @nox.session(python=USE_PYTHON_VERSIONS)
+# @nox.parametrize('command_a', install_commands)
+# @nox.parametrize('command_b', install_commands)
+# @nox.parametrize('uninstall_name', uninstall_names)
+# def session_pkgutil(session, command_a, command_b, uninstall_name):
+#     session.install('--upgrade', 'setuptools', 'pip', 'wheel')
+#     session.install(shared_package_path)
+#     install_packages(
+#         session, 'pkgutil/pkg_a', 'pkgutil/pkg_b',
+#         command_a, command_b)
+#     session.run('python', 'verify_packages.py')
+#     uninstall_test_flow(session, uninstall_name)
 
-@nox.session(python=USE_PYTHON_VERSIONS)
-@nox.parametrize('command_a', install_commands)
-@nox.parametrize('command_b', install_commands)
-@nox.parametrize('uninstall_name', uninstall_names)
-def session_pkgutil(session, command_a, command_b, uninstall_name):
-    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
-    session.install('example_pkg_src/')
-    install_packages(
-        session, 'pkgutil/pkg_a', 'pkgutil/pkg_b',
-        command_a, command_b)
-    session.run('python', 'verify_packages.py')
-    uninstall_test_flow(session, uninstall_name)
-
-
-@nox.session(python=USE_PYTHON_VERSIONS)
-@nox.parametrize('command_a', install_commands)
-@nox.parametrize('command_b', install_commands)
-@nox.parametrize('uninstall_name', uninstall_names)
-def session_pkg_resources(session, command_a, command_b, uninstall_name):
-    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
-    session.install('example_pkg_src/')
-    install_packages(
-        session, 'pkg_resources/pkg_a', 'pkg_resources/pkg_b',
-        command_a, command_b)
-    session.run('python', 'verify_packages.py')
-    uninstall_test_flow(session, uninstall_name)
+# this is what we are migrating away from
+# @nox.session(python=USE_PYTHON_VERSIONS)
+# @nox.parametrize('command_a', install_commands)
+# @nox.parametrize('command_b', install_commands)
+# @nox.parametrize('uninstall_name', uninstall_names)
+# def session_pkg_resources(session, command_a, command_b, uninstall_name):
+#     session.install('--upgrade', 'setuptools', 'pip', 'wheel')
+#     session.install(shared_package_path)
+#     install_packages(
+#         session, 'pkg_resources/pkg_a', 'pkg_resources/pkg_b',
+#         command_a, command_b)
+#     session.run('python', 'verify_packages.py')
+#     uninstall_test_flow(session, uninstall_name)
 
 @nox.session(python=USE_PYTHON_VERSIONS)
 @nox.parametrize('command_a', install_commands)
@@ -101,7 +103,7 @@ def session_pkg_resources(session, command_a, command_b, uninstall_name):
 @nox.parametrize('uninstall_name', uninstall_names)
 def session_pep420(session, command_a, command_b, uninstall_name):
     session.install('--upgrade', 'setuptools', 'pip', 'wheel')
-    session.install('example_pkg_src/')
+    session.install(shared_package_path)
     install_packages(
         session, 'native/pkg_a', 'native/pkg_b',
         command_a, command_b)
@@ -109,34 +111,35 @@ def session_pep420(session, command_a, command_b, uninstall_name):
     uninstall_test_flow(session, uninstall_name)
 
 
-@nox.session(python=USE_PYTHON_VERSIONS)
-@nox.parametrize('command_a', install_commands)
-@nox.parametrize('command_b', install_commands)
-@nox.parametrize('uninstall_name', uninstall_names)
-def session_cross_pkg_resources_pkgutil(
-        session, command_a, command_b, uninstall_name):
-    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
-    session.install('example_pkg_src/')
-    install_packages(
-        session, 'pkg_resources/pkg_a', 'pkgutil/pkg_b',
-        command_a, command_b)
-    session.run('python', 'verify_packages.py')
-    uninstall_test_flow(session, uninstall_name)
+# this wont be supportable by the SVOS flow due to this having an overlapping __init__.py
+# @nox.session(python=USE_PYTHON_VERSIONS)
+# @nox.parametrize('command_a', install_commands)
+# @nox.parametrize('command_b', install_commands)
+# @nox.parametrize('uninstall_name', uninstall_names)
+# def session_cross_pkg_resources_pkgutil(
+#         session, command_a, command_b, uninstall_name):
+#     session.install('--upgrade', 'setuptools', 'pip', 'wheel')
+#     session.install(shared_package_path)
+#     install_packages(
+#         session, 'pkg_resources/pkg_a', 'pkgutil/pkg_b',
+#         command_a, command_b)
+#     session.run('python', 'verify_packages.py')
+#     uninstall_test_flow(session, uninstall_name)
 
-
-@nox.session(python=USE_PYTHON_VERSIONS)
-@nox.parametrize('command_a', install_commands)
-@nox.parametrize('command_b', install_commands)
-@nox.parametrize('uninstall_name', uninstall_names)
-def session_cross_pep420_pkgutil(
-        session, command_a, command_b, uninstall_name):
-    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
-    session.install('example_pkg_src/')
-    install_packages(
-        session, 'native/pkg_a', 'pkgutil/pkg_b',
-        command_a, command_b)
-    session.run('python', 'verify_packages.py')
-    uninstall_test_flow(session, uninstall_name)
+# this wont be supportable by the SVOS flow due to this having an overlapping __init__.py
+# @nox.session(python=USE_PYTHON_VERSIONS)
+# @nox.parametrize('command_a', install_commands)
+# @nox.parametrize('command_b', install_commands)
+# @nox.parametrize('uninstall_name', uninstall_names)
+# def session_cross_pep420_pkgutil(
+#         session, command_a, command_b, uninstall_name):
+#     session.install('--upgrade', 'setuptools', 'pip', 'wheel')
+#     session.install(shared_package_path)
+#     install_packages(
+#         session, 'native/pkg_a', 'pkgutil/pkg_b',
+#         command_a, command_b)
+#     session.run('python', 'verify_packages.py')
+#     uninstall_test_flow(session, uninstall_name)
 
 
 @nox.session(python=USE_PYTHON_VERSIONS)
@@ -146,9 +149,24 @@ def session_cross_pep420_pkgutil(
 def session_cross_pep420_pkg_resources(
         session, command_a, command_b, uninstall_name):
     session.install('--upgrade', 'setuptools', 'pip', 'wheel')
-    session.install('example_pkg_src/')
+    session.install(shared_package_path)
     install_packages(
         session, 'native/pkg_a', 'pkg_resources/pkg_b',
+        command_a, command_b)
+    session.run('python', 'verify_packages.py')
+    uninstall_test_flow(session, uninstall_name)
+
+
+@nox.session(python=USE_PYTHON_VERSIONS)
+@nox.parametrize('command_a', install_commands)
+@nox.parametrize('command_b', install_commands)
+@nox.parametrize('uninstall_name', uninstall_names)
+def session_cross_pep420_toml_pkg_resources(
+        session, command_a, command_b, uninstall_name):
+    session.install('--upgrade', 'setuptools', 'pip', 'wheel')
+    session.install(shared_package_path)
+    install_packages(
+        session, 'native_toml/pkg_a', 'pkg_resources/pkg_b',
         command_a, command_b)
     session.run('python', 'verify_packages.py')
     uninstall_test_flow(session, uninstall_name)

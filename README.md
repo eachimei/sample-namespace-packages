@@ -1,3 +1,10 @@
+# Kevin Updates:
+
+pkgutil wont work for re-packaging in SVOS since it results in overlapping __init__.py in the package. This means we hav to use implicit namespaces (no __init__.py in the wheel) OR pkg_resources (legacy setuptools flow).
+
+pyproject.toml flow is **required** for tools and relies on the setuptools mechanism that builds the "__editable__" module. This is somewhat of a risk as we are assuming this editable feature of setuptools continues to work (I consider slight risky because the _old_ editable method didn't work). However, it should be
+that step 2 of this begins to start forcing tools to make the switch for future release.
+
 # Python Namespace Package Examples
 
 This repository contains samples for the various ways to create namespace

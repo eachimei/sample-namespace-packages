@@ -12,22 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from setuptools import setup, find_packages
-
-
-setup(
-    name='example_pkg',
-
-    version='1',
-
-    description='',
-    long_description='',
-
-    author='Jon Wayne Parrott',
-    author_email='jonwayne@google.com',
-
-    license='Apache Software License',
-    packages=["example_pkg"],
-    zip_safe=False,
-    include_package_data=True
-)
+name = 'a'

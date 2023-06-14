@@ -1,0 +1,2 @@
+include __example_pkg.pth
+include __example_pkg.py

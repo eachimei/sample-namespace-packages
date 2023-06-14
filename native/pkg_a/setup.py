@@ -29,6 +29,5 @@ setup(
     license='Apache Software License',
 
     packages=['example_pkg.a'],
-    install_requires=["example_pkg"],
     zip_safe=False,
 )

@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = 'example_pkg_a'
+version = '1'
+
+[tool.setuptools]
+packages=['example_pkg.a']
